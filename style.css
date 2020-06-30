@@ -6,18 +6,6 @@
     text-align: center;
 }
 
-#new-task, #all-tasks {
-    background-color: hsla(156, 49%, 83%, 1);
-    margin: 1em;
-    padding: 0.5em;
-    border: 3px solid black;
-}
-
-#task-list {
-    background-color: white;
-    min-width: 500px;
-}
-
 .task {
     display: flex;
     flex-direction: row;
@@ -26,10 +14,6 @@
     padding: 0em 0em;
     margin: 0.25em;
 }
-
-    .task > p {
-        flex-grow: 3;
-    }
 
     .task > button {
         height: 2em;
@@ -44,10 +28,33 @@
         margin: 0.25em;
     }
 
-    .task > input:focus {
-        background-color: white;
-    }
+        .task > input:focus {
+            background-color: white;
+        }
 
 .strike {
     text-decoration: line-through;
+}
+
+#new-task, #all-tasks {
+    min-width: 500px;
+    background-color: hsla(156, 49%, 83%, 1);
+    margin: 1em;
+    padding: 0.5em;
+    border: 3px solid black;
+}
+
+#new-task {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 2em;
+}
+
+#task-input {
+    flex-grow: 3;
+}
+
+#task-list {
+    background-color: white;
 }
