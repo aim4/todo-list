@@ -28,31 +28,40 @@ class Task {
     }
 
     _createElement() {
-        let div = document.createElement("div");
-        div.className = "task";
+        this.div = document.createElement("div");
+        this.div.className = "task";
 
-        let taskInput = document.createElement("input");
-        taskInput.type = "text";
-        taskInput.value = this.text;
-        div.appendChild(taskInput);
+        this.taskInput = document.createElement("input");
+        this.taskInput.type = "text";
+        this.taskInput.value = this.text;
+        this.div.appendChild(this.taskInput);
 
-        let doneBtn = document.createElement("button");
+        this.doneBtn = document.createElement("button");
         // TODO replace with constant/symbol
-        doneBtn.innerHTML = "Done";
-        doneBtn.className = "done-button";
-        div.appendChild(doneBtn);
+        this.doneBtn.innerHTML = "Done";
+        this.doneBtn.className = "done-button";
+        this.div.appendChild(this.doneBtn);
 
-        let deleteBtn = document.createElement("button");
+        this.deleteBtn = document.createElement("button");
         // TODO replace with constant/symbol
-        deleteBtn.innerHTML = "Delete";
-        deleteBtn.className = "delete-button";
-        div.appendChild(deleteBtn);
+        this.deleteBtn.innerHTML = "Delete";
+        this.deleteBtn.className = "delete-button";
+        this.div.appendChild(this.deleteBtn);
 
-        document.getElementById("task-list").appendChild(div);
+        document.getElementById("task-list").appendChild(this.div);
+    }
+
+    // TODO: add done function class or data thing
+    _setDone() {
+        this.completed = true;
     }
 
     setText(t) {
         this.text = t;
+    }
+
+    getDeleteBtn() {
+        return this.deleteBtn;
     }
 }
 
