@@ -28,33 +28,52 @@ class Task {
     }
 
     _createElement() {
-        let self = this;
-
         this.div = document.createElement("div");
         this.div.className = "task";
 
+        // TODO: on clicking task text, change type to input
         this.taskInput = document.createElement("p");
         //this.taskInput.type = "text";
         this.taskInput.innerText = this.text;
         this.div.appendChild(this.taskInput);
 
-        this.doneCheckBox = document.createElement("input");
         // TODO replace with constant/symbol
-        this.doneCheckBox.type = "checkbox";
-        this.doneCheckBox.name = "Done";
-        this.doneCheckBox.className = "done-checkbox";
-        this.doneCheckBox.addEventListener("click", function() {
+        this.doneBox = this._createDoneBox();
+        this.label = this._createDoneLabel();
+        this.deleteBtn = this._createDeleteBtn();
+
+        this.div.appendChild(this.doneBox);
+        this.div.appendChild(this.label);
+        this.div.appendChild(this.deleteBtn);
+        document.getElementById("task-list").appendChild(this.div);
+    }
+
+    // TODO refactor
+    _createDoneBox() {
+        let doneBox = document.createElement("input");
+        // TODO replace with constant/symbol
+        doneBox.type = "checkbox";
+        doneBox.className = "done-checkbox"
+
+        let self = this;
+        doneBox.addEventListener("click", function () {
             self._setDone();
         });
-        this.div.appendChild(this.doneCheckBox);
+        return doneBox;
+    }
 
-        this.deleteBtn = document.createElement("button");
+    _createDoneLabel() {
+        let label = document.createElement("label");
+        label.innerText = "done";
+        return label;
+    }
+
+    _createDeleteBtn() {
+        let deleteBtn = document.createElement("button");
         // TODO replace with constant/symbol
-        this.deleteBtn.innerText = "Delete";
-        this.deleteBtn.className = "delete-button";
-        this.div.appendChild(this.deleteBtn);
-
-        document.getElementById("task-list").appendChild(this.div);
+        deleteBtn.innerText = "Delete";
+        deleteBtn.className = "delete-button";
+        return deleteBtn;
     }
 
     // TODO: add done function class or data thing
