@@ -4,7 +4,9 @@ class TaskManager {
     }
 
     addTask(t) {
-        this.tasks.push(t);
+        if (t instanceof Task) {
+            this.tasks.push(t);
+        }
     }
 
     // Remove task at index if exists
@@ -45,8 +47,10 @@ function addTask(e) {
     }
 
     let t = new Task(input.value);
-    console.log("created new task: ", t);
+    taskManager.addTask(t);
 }
+
+let taskManager = new TaskManager();
 
 // Bind button functions
 let addButton = document.getElementById("add-button");
