@@ -1,3 +1,18 @@
-﻿body
-{
+﻿body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+#new-task, #all-tasks {
+    background-color: hsla(156, 49%, 83%, 1);
+    margin: 1em;
+    padding: 0.5em;
+    border: 3px solid black;
+}
+
+#tasks {
+    background-color: white;
 }
