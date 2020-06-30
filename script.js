@@ -4,14 +4,29 @@ class TaskManager {
     }
 
     addTask(t) {
-        if (t instanceof Task) {
-            this.tasks.push(t);
+        if (!(t instanceof Task)) {
+            return;
         }
+
+        this.tasks.push(t);
+        let self = this;
+        t.bindDeleteBtn(function () {
+            self.removeTask(t);
+        });
     }
 
     // Remove task at index if exists
-    removeTask(i) {
+    removeTask(t) {
+        let i = this.tasks.indexOf(t)
+        console.log(t);
+        console.log(this.tasks);
+        if (i < 0 | i >= this.tasks.length) {
+            return;
+        }
 
+        console.log("pushing button", i, this.tasks.length);
+        this.tasks.splice(i, 1);
+        t.delete();
     }
 
     // Get task at index
@@ -69,8 +84,9 @@ class Task {
     }
 
     _createDeleteBtn() {
-        let deleteBtn = document.createElement("button");
         // TODO replace with constant/symbol
+        let deleteBtn = document.createElement("button");
+
         deleteBtn.innerText = "Delete";
         deleteBtn.className = "delete-button";
         return deleteBtn;
@@ -90,8 +106,12 @@ class Task {
         this.text = t;
     }
 
-    getDeleteBtn() {
-        return this.deleteBtn;
+    bindDeleteBtn(func) {
+        this.deleteBtn.addEventListener("click", func);
+    }
+
+    delete() {
+        this.div.parentNode.removeChild(this.div);
     }
 }
 
