@@ -28,23 +28,29 @@ class Task {
     }
 
     _createElement() {
+        let self = this;
+
         this.div = document.createElement("div");
         this.div.className = "task";
 
-        this.taskInput = document.createElement("input");
-        this.taskInput.type = "text";
-        this.taskInput.value = this.text;
+        this.taskInput = document.createElement("p");
+        //this.taskInput.type = "text";
+        this.taskInput.innerText = this.text;
         this.div.appendChild(this.taskInput);
 
-        this.doneBtn = document.createElement("button");
+        this.doneCheckBox = document.createElement("input");
         // TODO replace with constant/symbol
-        this.doneBtn.innerHTML = "Done";
-        this.doneBtn.className = "done-button";
-        this.div.appendChild(this.doneBtn);
+        this.doneCheckBox.type = "checkbox";
+        this.doneCheckBox.name = "Done";
+        this.doneCheckBox.className = "done-checkbox";
+        this.doneCheckBox.addEventListener("click", function() {
+            self._setDone();
+        });
+        this.div.appendChild(this.doneCheckBox);
 
         this.deleteBtn = document.createElement("button");
         // TODO replace with constant/symbol
-        this.deleteBtn.innerHTML = "Delete";
+        this.deleteBtn.innerText = "Delete";
         this.deleteBtn.className = "delete-button";
         this.div.appendChild(this.deleteBtn);
 
@@ -53,7 +59,12 @@ class Task {
 
     // TODO: add done function class or data thing
     _setDone() {
-        this.completed = true;
+        this.completed = !this.completed;
+        if (this.completed) {
+            this.taskInput.className = "strike";
+        } else {
+            this.taskInput.className = "";
+        }
     }
 
     setText(t) {
