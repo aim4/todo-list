@@ -15,23 +15,38 @@
 
 #task-list {
     background-color: white;
+    min-width: 500px;
 }
 
 .task {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    padding: 0em 0.5em;
+    padding: 0em 0em;
+    margin: 0.25em;
 }
 
-.task > p {
-    flex-grow: 3;
-}
+    .task > p {
+        flex-grow: 3;
+    }
 
-.task > input, button {
-    height: 2em;
-}
+    .task > button {
+        height: 2em;
+    }
+
+    .task > input {
+        flex-grow: 3;
+        height: 2em;
+        background-color: hsla(0, 93%, 85%, 1);
+        border: none;
+        padding: 0.25em;
+        margin: 0.25em;
+    }
+
+    .task > input:focus {
+        background-color: white;
+    }
 
 .strike {
     text-decoration: line-through;

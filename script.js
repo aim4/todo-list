@@ -18,13 +18,9 @@ class TaskManager {
     // Remove task at index if exists
     removeTask(t) {
         let i = this.tasks.indexOf(t)
-        console.log(t);
-        console.log(this.tasks);
         if (i < 0 | i >= this.tasks.length) {
             return;
         }
-
-        console.log("pushing button", i, this.tasks.length);
         this.tasks.splice(i, 1);
         t.delete();
     }
@@ -47,20 +43,42 @@ class Task {
         this.div.className = "task";
 
         // TODO: on clicking task text, change type to input
-        this.taskInput = document.createElement("p");
-        //this.taskInput.type = "text";
-        this.taskInput.innerText = this.text;
-        this.div.appendChild(this.taskInput);
-
-        // TODO replace with constant/symbol
+        this.taskDesc = this._createTaskDescription();
         this.doneBox = this._createDoneBox();
         this.label = this._createDoneLabel();
         this.deleteBtn = this._createDeleteBtn();
 
+        this.div.appendChild(this.taskDesc);
         this.div.appendChild(this.doneBox);
         this.div.appendChild(this.label);
         this.div.appendChild(this.deleteBtn);
         document.getElementById("task-list").appendChild(this.div);
+    }
+
+    _createTaskDescription() {
+        let taskDesc = document.createElement("input");
+        taskDesc.type = "text";
+        taskDesc.value = this.text;
+
+        //let self = this;
+        //taskDesc.addEventListener("click", function () {
+        //    if (!self.taskDesc) {
+        //        return''
+        //    }
+
+        //    if (self.taskDesc instanceof HTMLParagraphElement) {
+        //        let input = document.createElement("input");
+        //        input.type = "text";
+        //        input.value = taskDesc.innerText;
+        //        self.taskDesc.parentNode.replaceChild(input, self.taskDesc);
+        //        self.taskDesc = input;
+        //    } else {
+        //        let p = document.createElement("p");
+        //        p.innerText = self.taskDesc.value;
+        //        self.taskDesc.parentNode.replaceChild(p, self.taskDesc);
+        //    }
+        //});
+        return taskDesc;
     }
 
     // TODO refactor
@@ -96,9 +114,9 @@ class Task {
     _setDone() {
         this.completed = !this.completed;
         if (this.completed) {
-            this.taskInput.className = "strike";
+            this.taskDesc.className = "strike";
         } else {
-            this.taskInput.className = "";
+            this.taskDesc.className = "";
         }
     }
 
