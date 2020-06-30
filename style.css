@@ -13,6 +13,10 @@
     border: 3px solid black;
 }
 
-#tasks {
+#task-list {
     background-color: white;
+}
+
+.task {
+    padding: 1em;
 }

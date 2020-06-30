@@ -24,6 +24,31 @@ class Task {
     constructor(t) {
         this.text = t;
         this.completed = false;
+        this._createElement();
+    }
+
+    _createElement() {
+        let div = document.createElement("div");
+        div.className = "task";
+
+        let taskInput = document.createElement("input");
+        taskInput.type = "text";
+        taskInput.value = this.text;
+        div.appendChild(taskInput);
+
+        let doneBtn = document.createElement("button");
+        // TODO replace with constant/symbol
+        doneBtn.innerHTML = "Done";
+        doneBtn.className = "done-button";
+        div.appendChild(doneBtn);
+
+        let deleteBtn = document.createElement("button");
+        // TODO replace with constant/symbol
+        deleteBtn.innerHTML = "Delete";
+        deleteBtn.className = "delete-button";
+        div.appendChild(deleteBtn);
+
+        document.getElementById("task-list").appendChild(div);
     }
 
     setText(t) {
@@ -53,8 +78,8 @@ function addTask(e) {
 let taskManager = new TaskManager();
 
 // Bind button functions
-let addButton = document.getElementById("add-button");
-addButton.addEventListener("click", addTask);
+let addBtn = document.getElementById("add-button");
+addBtn.addEventListener("click", addTask);
 
-let clearButton = document.getElementById("clear-button");
-clearButton.addEventListener("click", clearInput);
+let clearBtn = document.getElementById("clear-button");
+clearBtn.addEventListener("click", clearInput);
