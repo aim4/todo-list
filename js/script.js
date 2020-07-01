@@ -1,100 +1,3 @@
-// Might not need task manager
-
-class TaskManager {
-    constructor() {
-        this.tasks = []
-        this.selectedTask = null;
-        this.draggedOver = null;
-    }
-
-    addTask(t) {
-        if (!(t instanceof Task)) {
-            return;
-        }
-
-        this.tasks.push(t);
-        let self = this;
-        t.bindDeleteBtn(function () {
-            self.removeTask(t);
-        });
-
-        //t.bindOnDragStart(function (e) {
-        //    e.stopPropagation();
-        //    self.selectedTask = t;
-        //    console.log("dragged START task: ", t);
-        //    t.div.classList.add("dragging");
-        //});
-
-        //t.bindOnDragOver(function (e) {
-        //    e.preventDefault(); 
-        //    let target = null;
-        //    if (e.target instanceof HTMLDivElement && e.target.className === "task") {
-        //        target = e.target;
-        //    } else {
-        //        target = e.target.parentNode;
-        //    }
-        //    if (!self.draggedOver) {
-        //        self.draggedOver = target;
-        //    } else if (self.draggedOver === target) {
-        //        return;
-        //    } else {
-        //        self.draggedOver = target;
-        //    }
-        //    console.log("dragged OVER target: ", target);
-        //    console.log("t is over: ", this);
-        //    //console.log("dragged OVER selected: ", self.selectedTask);
-        //    // TODO: drop the select task under the current task
-        //    // Easiest thing to do is swap text
-        //    let i = self.selectedTask.getText();
-        //    let j = target.children[0].value;
-        //    self.selectedTask.setText(j);
-        //    target.children[0].value = i;
-        //    //self.tasks[i] = target;
-        //    //self.tasks[j] = self.selectedTask;
-
-        //    //self.tasks.splice(i, 0, self.selectedTask);
-        //});
-
-        //t.bindOnDragEnd(function (e) {
-        //    e.preventDefault();
-        //    let target = null;
-        //    if (e.target instanceof HTMLDivElement && e.target.className === "task") {
-        //        target = e.target;
-        //    } else {
-        //        target = e.target.parentNode;
-        //    }
-        //    console.log("dragged END target: ", target);
-        //    //console.log("dragged END target: ID ", self.selectedTask);
-        //    //t.setBackgroundColor("hsla(156, 39%, 90%, 1)");
-        //    t.div.classList.remove("dragging");
-        //});
-    }
-
-    // Remove task at index if exists
-    removeTask(t) {
-        let removed = this._removeTaskFromTasksSuccess(t);
-        if (removed) {
-            t.delete();
-        }
-    }
-
-    _removeTaskFromTasksSuccess(t) {
-        let i = this.tasks.indexOf(t);
-        let children = t.div.parentNode.children;
-        console.log("i: ", i, children);
-        if (i < 0 | i >= this.tasks.length) {
-            return false;
-        }
-        this.tasks.splice(i, 1);
-        return true;
-    }
-
-    // Get task at index
-    getTasks() {
-        return this.tasks;
-    }
-}
-
 class Task {
     constructor(t) {
         this.text = t;
@@ -123,6 +26,7 @@ class Task {
         div.draggable = true;
         div.classList.add("draggable");
 
+        const self = this;
         div.addEventListener("dragstart", function (e) {
             e.stopPropagation();
             self.div.classList.add("dragging");
@@ -177,6 +81,9 @@ class Task {
 
         deleteBtn.innerText = "Delete";
         deleteBtn.className = "delete-button";
+        deleteBtn.addEventListener("click", function () {
+            deleteBtn.parentNode.parentNode.removeChild(deleteBtn.parentNode);
+        })
         return deleteBtn;
     }
 
@@ -207,13 +114,11 @@ class Task {
 }
 
 function clearInput(e) {
-    //e.stopPropagation();
     let input = document.getElementById("task-input");
     input.value = "";
 }
 
 function addTask(e) {
-    //e.stopPropagation();
     let input = document.getElementById("task-input");
     if (input.value === "") {
         // TODO add a warning
@@ -222,7 +127,6 @@ function addTask(e) {
     }
 
     let t = new Task(input.value);
-    taskManager.addTask(t);
 }
 
 // Return which element the currently dragged element is after/below
@@ -244,7 +148,6 @@ function getDragAfterElement(container, y) {
 }
 
 // Main
-let taskManager = new TaskManager();
 
 // Drop zone
 let taskContainer = document.getElementById("task-container");
