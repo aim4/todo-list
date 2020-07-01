@@ -1,6 +1,10 @@
+// Might not need task manager
+
 class TaskManager {
     constructor() {
         this.tasks = []
+        this.selectedTask = null;
+        this.draggedOver = null;
     }
 
     addTask(t) {
@@ -13,21 +17,81 @@ class TaskManager {
         t.bindDeleteBtn(function () {
             self.removeTask(t);
         });
+
+        //t.bindOnDragStart(function (e) {
+        //    e.stopPropagation();
+        //    self.selectedTask = t;
+        //    console.log("dragged START task: ", t);
+        //    t.div.classList.add("dragging");
+        //});
+
+        //t.bindOnDragOver(function (e) {
+        //    e.preventDefault(); 
+        //    let target = null;
+        //    if (e.target instanceof HTMLDivElement && e.target.className === "task") {
+        //        target = e.target;
+        //    } else {
+        //        target = e.target.parentNode;
+        //    }
+        //    if (!self.draggedOver) {
+        //        self.draggedOver = target;
+        //    } else if (self.draggedOver === target) {
+        //        return;
+        //    } else {
+        //        self.draggedOver = target;
+        //    }
+        //    console.log("dragged OVER target: ", target);
+        //    console.log("t is over: ", this);
+        //    //console.log("dragged OVER selected: ", self.selectedTask);
+        //    // TODO: drop the select task under the current task
+        //    // Easiest thing to do is swap text
+        //    let i = self.selectedTask.getText();
+        //    let j = target.children[0].value;
+        //    self.selectedTask.setText(j);
+        //    target.children[0].value = i;
+        //    //self.tasks[i] = target;
+        //    //self.tasks[j] = self.selectedTask;
+
+        //    //self.tasks.splice(i, 0, self.selectedTask);
+        //});
+
+        //t.bindOnDragEnd(function (e) {
+        //    e.preventDefault();
+        //    let target = null;
+        //    if (e.target instanceof HTMLDivElement && e.target.className === "task") {
+        //        target = e.target;
+        //    } else {
+        //        target = e.target.parentNode;
+        //    }
+        //    console.log("dragged END target: ", target);
+        //    //console.log("dragged END target: ID ", self.selectedTask);
+        //    //t.setBackgroundColor("hsla(156, 39%, 90%, 1)");
+        //    t.div.classList.remove("dragging");
+        //});
     }
 
     // Remove task at index if exists
     removeTask(t) {
-        let i = this.tasks.indexOf(t)
+        let removed = this._removeTaskFromTasksSuccess(t);
+        if (removed) {
+            t.delete();
+        }
+    }
+
+    _removeTaskFromTasksSuccess(t) {
+        let i = this.tasks.indexOf(t);
+        let children = t.div.parentNode.children;
+        console.log("i: ", i, children);
         if (i < 0 | i >= this.tasks.length) {
-            return;
+            return false;
         }
         this.tasks.splice(i, 1);
-        t.delete();
+        return true;
     }
 
     // Get task at index
-    getTask(i) {
-
+    getTasks() {
+        return this.tasks;
     }
 }
 
@@ -43,27 +107,17 @@ class Task {
         this.div = document.createElement("div");
         this.div.className = "task";
         this.div.draggable = true;
-        this.div.ondragstart = function (e) {
+        this.div.classList.add("draggable");
+
+        this.div.addEventListener("dragstart", function (e) {
             e.stopPropagation();
-            e.dataTransfer.setData('text/plain', e.target.id);
-            self.div.style.backgroundColor = "hsla(54, 93%, 88%, 1)";
-        };
+            self.div.classList.add("dragging");
+        });
 
-        this.div.ondragover = function (e) {
+        this.div.addEventListener("dragend", function (e) {
             e.preventDefault();
-            console.log("dragged OVER : ", self);
-            console.log("dragged OVER target: ", e.target);
-            console.log("dragged OVER target: ID ", e.dataTransfer.getData('text'));
-            // TODO: need to check what was dragged over
-        }
-
-        this.div.ondragend = function (e) {
-            e.preventDefault();
-            console.log("dragged END : ", self);
-            console.log("dragged END target: ", e.target);
-            console.log("dragged END target: ID ", e.dataTransfer.getData('text'));
-            self.div.style.backgroundColor = "hsla(156, 39%, 90%, 1)";
-        }
+            self.div.classList.remove("dragging");
+        });
 
         // TODO: on clicking task text, change type to input
         this.taskDesc = this._createTaskDescription();
@@ -75,7 +129,7 @@ class Task {
         this.div.appendChild(this.doneBox);
         this.div.appendChild(this.label);
         this.div.appendChild(this.deleteBtn);
-        document.getElementById("task-list").appendChild(this.div);
+        document.getElementById("task-container").appendChild(this.div);
     }
 
     _createTaskDescription() {
@@ -123,7 +177,6 @@ class Task {
         return deleteBtn;
     }
 
-    // TODO: add done function class or data thing
     _setDone() {
         this.completed = !this.completed;
         if (this.completed) {
@@ -133,16 +186,20 @@ class Task {
         }
     }
 
-    setText(t) {
-        this.text = t;
-    }
-
     bindDeleteBtn(func) {
         this.deleteBtn.addEventListener("click", func);
     }
 
+    setText(t) {
+        this.taskDesc.value = t;
+    }
+
     delete() {
         this.div.parentNode.removeChild(this.div);
+    }
+
+    getText() {
+        return this.taskDesc.value;
     }
 }
 
@@ -165,13 +222,39 @@ function addTask(e) {
     taskManager.addTask(t);
 }
 
-// TODO clear insert task input on load
+// Return which element the currently dragged element is after/below
+// Source: https://github.com/WebDevSimplified/Drag-And-Drop/blob/master/script.js
+function getDragAfterElement(container, y) {
+    // Get all draggables we are not currently dragging and convert to array
+    const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]
+    // Find after element
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+
+}
+
+// Main
 let taskManager = new TaskManager();
-//let allTasks = document.getElementById("all-tasks");
-//allTasks.ondragend = function (e) {
-//    e.preventDefault();
-//    console.log("draged on all tasks");
-//}
+
+// Drop zone
+let taskContainer = document.getElementById("task-container");
+taskContainer.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(taskContainer, e.clientY);
+    const draggingTask = document.querySelector(".dragging");
+    if (afterElement == null) {
+        taskContainer.appendChild(draggingTask);
+    } else {
+        taskContainer.insertBefore(draggingTask, afterElement);
+    }
+});
 
 // Bind button functions
 let addBtn = document.getElementById("add-button");
@@ -179,3 +262,9 @@ addBtn.addEventListener("click", addTask);
 
 let clearBtn = document.getElementById("clear-button");
 clearBtn.addEventListener("click", clearInput);
+
+// Clear task input on load
+document.addEventListener("DOMContentLoaded", function () {
+    let input = document.getElementById("task-input");
+    input.value = "";
+});

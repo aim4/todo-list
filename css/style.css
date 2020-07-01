@@ -12,7 +12,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0em 0em;
-    /*    margin: 0.25em;*/
+    margin: 0.5em;
     background-color: hsla(156, 39%, 90%, 1);
     border-color: hsla(156, 10%, 90%, 1);
     border: 2px solid hsla(156, 30%, 40%, 1);
@@ -39,6 +39,10 @@
     text-decoration: line-through;
 }
 
+.dragging {
+    background-color: hsla(54, 93%, 88%, 1);
+}
+
 #new-task, #all-tasks {
     min-width: 500px;
     background-color: hsla(156, 49%, 83%, 1);
@@ -58,6 +62,8 @@
     flex-grow: 3;
 }
 
-#task-list {
+#task-container {
     background-color: white;
+    padding: 0.25em;
+    min-height: 3em;
 }
