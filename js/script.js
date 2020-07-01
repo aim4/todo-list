@@ -104,22 +104,7 @@ class Task {
 
     _createElement() {
         let self = this;
-        this.div = document.createElement("div");
-        this.div.className = "task";
-        this.div.draggable = true;
-        this.div.classList.add("draggable");
-
-        this.div.addEventListener("dragstart", function (e) {
-            e.stopPropagation();
-            self.div.classList.add("dragging");
-        });
-
-        this.div.addEventListener("dragend", function (e) {
-            e.preventDefault();
-            self.div.classList.remove("dragging");
-        });
-
-        // TODO: on clicking task text, change type to input
+        this.div = this._createDiv();
         this.taskDesc = this._createTaskDescription();
         this.doneBox = this._createDoneBox();
         this.label = this._createDoneLabel();
@@ -130,6 +115,24 @@ class Task {
         this.div.appendChild(this.label);
         this.div.appendChild(this.deleteBtn);
         document.getElementById("task-container").appendChild(this.div);
+    }
+
+    _createDiv() {
+        let div = document.createElement("div");
+        div.className = "task";
+        div.draggable = true;
+        div.classList.add("draggable");
+
+        div.addEventListener("dragstart", function (e) {
+            e.stopPropagation();
+            self.div.classList.add("dragging");
+        });
+
+        div.addEventListener("dragend", function (e) {
+            e.preventDefault();
+            self.div.classList.remove("dragging");
+        });
+        return div;
     }
 
     _createTaskDescription() {
