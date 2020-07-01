@@ -39,8 +39,21 @@ class Task {
     }
 
     _createElement() {
+        let self = this;
         this.div = document.createElement("div");
         this.div.className = "task";
+        this.div.draggable = true;
+        this.div.ondragstart = function () {
+            self.div.style.backgroundColor = "hsla(54, 93%, 88%, 1)";
+        };
+
+        this.div.ondragover = function (e) {
+            e.preventDefault();
+        }
+
+        this.div.ondragend = function () {
+            self.div.style.backgroundColor = "hsla(156, 39%, 90%, 1)";
+        }
 
         // TODO: on clicking task text, change type to input
         this.taskDesc = this._createTaskDescription();
