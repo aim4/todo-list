@@ -59,25 +59,6 @@ class Task {
         let taskDesc = document.createElement("input");
         taskDesc.type = "text";
         taskDesc.value = this.text;
-
-        //let self = this;
-        //taskDesc.addEventListener("click", function () {
-        //    if (!self.taskDesc) {
-        //        return''
-        //    }
-
-        //    if (self.taskDesc instanceof HTMLParagraphElement) {
-        //        let input = document.createElement("input");
-        //        input.type = "text";
-        //        input.value = taskDesc.innerText;
-        //        self.taskDesc.parentNode.replaceChild(input, self.taskDesc);
-        //        self.taskDesc = input;
-        //    } else {
-        //        let p = document.createElement("p");
-        //        p.innerText = self.taskDesc.value;
-        //        self.taskDesc.parentNode.replaceChild(p, self.taskDesc);
-        //    }
-        //});
         return taskDesc;
     }
 
