@@ -43,15 +43,25 @@ class Task {
         this.div = document.createElement("div");
         this.div.className = "task";
         this.div.draggable = true;
-        this.div.ondragstart = function () {
+        this.div.ondragstart = function (e) {
+            e.stopPropagation();
+            e.dataTransfer.setData('text/plain', e.target.id);
             self.div.style.backgroundColor = "hsla(54, 93%, 88%, 1)";
         };
 
         this.div.ondragover = function (e) {
             e.preventDefault();
+            console.log("dragged OVER : ", self);
+            console.log("dragged OVER target: ", e.target);
+            console.log("dragged OVER target: ID ", e.dataTransfer.getData('text'));
+            // TODO: need to check what was dragged over
         }
 
-        this.div.ondragend = function () {
+        this.div.ondragend = function (e) {
+            e.preventDefault();
+            console.log("dragged END : ", self);
+            console.log("dragged END target: ", e.target);
+            console.log("dragged END target: ID ", e.dataTransfer.getData('text'));
             self.div.style.backgroundColor = "hsla(156, 39%, 90%, 1)";
         }
 
@@ -69,9 +79,18 @@ class Task {
     }
 
     _createTaskDescription() {
+        // https://stackoverflow.com/questions/35817220/how-can-i-make-a-nested-element-not-draggable-in-a-draggable-container
         let taskDesc = document.createElement("input");
         taskDesc.type = "text";
         taskDesc.value = this.text;
+        taskDesc.addEventListener("mousedown", function (e) {
+            e.stopPropagation;
+            e.target.parentNode.draggable = false;
+        });
+        taskDesc.addEventListener("mouseup", function (e) {
+            e.target.parentNode.draggable = true;
+        });
+
         return taskDesc;
     }
 
@@ -146,7 +165,13 @@ function addTask(e) {
     taskManager.addTask(t);
 }
 
+// TODO clear insert task input on load
 let taskManager = new TaskManager();
+//let allTasks = document.getElementById("all-tasks");
+//allTasks.ondragend = function (e) {
+//    e.preventDefault();
+//    console.log("draged on all tasks");
+//}
 
 // Bind button functions
 let addBtn = document.getElementById("add-button");
