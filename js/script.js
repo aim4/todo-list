@@ -6,7 +6,6 @@ class Task {
     }
 
     _createElement() {
-        let self = this;
         this.div = this._createDiv();
         this.taskDesc = this._createTaskDescription();
         this.doneBox = this._createDoneBox();
@@ -58,7 +57,6 @@ class Task {
     // TODO refactor
     _createDoneBox() {
         let doneBox = document.createElement("input");
-        // TODO replace with constant/symbol
         doneBox.type = "checkbox";
         doneBox.className = "done-checkbox"
 
@@ -149,7 +147,7 @@ function getDragAfterElement(container, y) {
 
 // Main
 
-// Drop zone
+// Set drag and drop functionality
 let taskContainer = document.getElementById("task-container");
 taskContainer.addEventListener("dragover", function (e) {
     e.preventDefault();

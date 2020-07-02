@@ -9,26 +9,39 @@
 .task {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 0em 0em;
     margin: 0.5em;
-    background-color: hsla(156, 39%, 90%, 1);
+    background-color: hsla(156, 49%, 83%, 1);
     border-color: hsla(156, 10%, 90%, 1);
     border: 2px solid hsla(156, 30%, 40%, 1);
 }
 
     .task > button {
         height: 2em;
+        margin: 0.5em;
+        text-align: center;
+    }
+
+    .task > label {
+        margin: 0.25em 0.5em 0.25em 0.25em;
     }
 
     .task > input {
         flex-grow: 3;
         height: 2em;
-        background-color: hsla(0, 93%, 85%, 1);
-        border: none;
-        padding: 0.25em;
+        background-color: hsla(156, 14%, 90%, 1);
+        border: 5px ridge hsla(156, 14%, 80%, 1);
+        padding: 0.5em;
         margin: 0.25em;
+    }
+
+    .task > .done-checkbox {
+        flex-grow: 0;
+        margin: 0em 0em 0em 0.5em;
+        height: 1.5em;
+        border: none;
     }
 
         .task > input:focus {
