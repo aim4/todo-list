@@ -161,10 +161,10 @@ taskContainer.addEventListener("dragover", function (e) {
 });
 
 // Bind button functions
-let addBtn = document.getElementById("add-button");
+let addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", addTask);
 
-let clearBtn = document.getElementById("clear-button");
+let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clearInput);
 
 // Clear task input on load

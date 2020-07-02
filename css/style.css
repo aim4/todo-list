@@ -6,6 +6,11 @@
     text-align: center;
 }
 
+button {
+    height: 2em;
+    margin: 0.25em;
+}
+
 .task {
     display: flex;
     flex-direction: row;
@@ -17,12 +22,6 @@
     border-color: hsla(156, 10%, 90%, 1);
     border: 2px solid hsla(156, 30%, 40%, 1);
 }
-
-    .task > button {
-        height: 2em;
-        margin: 0.5em;
-        text-align: center;
-    }
 
     .task > label {
         margin: 0.25em 0.5em 0.25em 0.25em;
