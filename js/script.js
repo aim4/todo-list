@@ -153,7 +153,7 @@ function hideCompleteTasks(container) {
         if (container.children[i].classList.contains(COMPLETED_CLASS)) {
             container.children[i].style.display = "none";
         } else {
-            container.children[i].style.display = "block";
+            container.children[i].style.display = "";
         }
     }
 }
@@ -163,14 +163,14 @@ function showCompleteTasks(container) {
         if (!container.children[i].classList.contains(COMPLETED_CLASS)) {
             container.children[i].style.display = "none";
         } else {
-            container.children[i].style.display = "block";
+            container.children[i].style.display = "";
         }
     }
 }
 
 function showAllTasks(container) {
     for (let i = 0; i < container.children.length; i++) {
-        container.children[i].style.display = "block";
+        container.children[i].style.display = "";
     }
 }
 
