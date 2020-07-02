@@ -138,6 +138,32 @@ function getDragAfterElement(container, y) {
 
 }
 
+function hideCompleteTasks(container) {
+    for (let i = 0; i < container.children.length; i++) {
+        if (container.children[i].classList.contains(COMPLETED_CLASS)) {
+            container.children[i].style.display = "none";
+        } else {
+            container.children[i].style.display = "block";
+        }
+    }
+}
+
+function showCompleteTasks(container) {
+    for (let i = 0; i < container.children.length; i++) {
+        if (!container.children[i].classList.contains(COMPLETED_CLASS)) {
+            container.children[i].style.display = "none";
+        } else {
+            container.children[i].style.display = "block";
+        }
+    }
+}
+
+function showAllTasks(container) {
+    for (let i = 0; i < container.children.length; i++) {
+        container.children[i].style.display = "block";
+    }
+}
+
 // Main
 
 // Set drag and drop functionality
@@ -153,12 +179,28 @@ taskContainer.addEventListener("dragover", function (e) {
     }
 });
 
-// Bind button functions
+// Bind buttons for new task input
 let addBtn = document.getElementById("add-btn");
 addBtn.addEventListener("click", addTask);
 
 let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clearInput);
+
+// Bind buttons for viewing task categories
+let allTasksBtn = document.getElementById("all-tasks-btn");
+allTasksBtn.addEventListener("click", function () {
+    showAllTasks(taskContainer);
+})
+
+let inProgressTasksBtn = document.getElementById("in-progress-tasks-btn");
+inProgressTasksBtn.addEventListener("click", function () {
+    hideCompleteTasks(taskContainer);
+});
+
+let completedTasksBtn = document.getElementById("completed-tasks-btn");
+completedTasksBtn.addEventListener("click", function () {
+    showCompleteTasks(taskContainer);
+});
 
 // Clear task input on load
 document.addEventListener("DOMContentLoaded", function () {
