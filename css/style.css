@@ -1,5 +1,6 @@
 ﻿header {
     font-family: 'Rubik', sans-serif;
+    text-align: center;
 }
 
 body {
@@ -90,4 +91,9 @@ button {
     background-color: white;
     padding: 0.25em;
     min-height: 3em;
+}
+
+#author {
+    font-weight: 400;
+    letter-spacing: 0.5rem;
 }
