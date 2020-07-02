@@ -52,7 +52,11 @@ button {
 }
 
 .dragging {
-    background-color: hsla(54, 93%, 88%, 1);
+    background-color: hsla(54, 93%, 80%, 1);
+}
+
+.hovering {
+    background-color: hsla(54, 93%, 95%, 1);
 }
 
 #new-task, #all-tasks {

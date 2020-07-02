@@ -1,7 +1,8 @@
 // Refactor time
+const COMPLETED_CLASS = "completed";
 const DRAGGABLE_CLASS = "draggable";
 const DRAGGING_CLASS = "dragging";
-const COMPLETED_CLASS = "completed";
+const HOVERING_CLASS = "hovering";
 const STRIKE_CLASS = "strike";
 const TASK_CLASS = "task";
 
@@ -42,6 +43,14 @@ class Task {
             e.preventDefault();
             self.div.classList.remove(DRAGGING_CLASS);
         });
+
+        div.addEventListener("mouseover", function () {
+            self.div.classList.add(HOVERING_CLASS);
+        })
+
+        div.addEventListener("mouseleave", function () {
+            self.div.classList.remove(HOVERING_CLASS);
+        })
         return div;
     }
 
@@ -50,14 +59,15 @@ class Task {
         let taskDesc = document.createElement("input");
         taskDesc.type = "text";
         taskDesc.value = this.text;
+
         taskDesc.addEventListener("mousedown", function (e) {
             e.stopPropagation;
             e.target.parentNode.draggable = false;
         });
+
         taskDesc.addEventListener("mouseup", function (e) {
             e.target.parentNode.draggable = true;
         });
-
         return taskDesc;
     }
 
