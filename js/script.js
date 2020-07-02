@@ -171,7 +171,7 @@ let taskContainer = document.getElementById("task-container");
 taskContainer.addEventListener("dragover", function (e) {
     e.preventDefault();
     const afterElement = getDragAfterElement(taskContainer, e.clientY);
-    const draggingTask = document.querySelector(DRAGGING_CLASS);
+    const draggingTask = document.querySelector(".dragging");
     if (afterElement == null) {
         taskContainer.appendChild(draggingTask);
     } else {
