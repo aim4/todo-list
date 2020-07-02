@@ -1,3 +1,10 @@
+// Refactor time
+const DRAGGABLE_CLASS = "draggable";
+const DRAGGING_CLASS = "dragging";
+const COMPLETED_CLASS = "completed";
+const STRIKE_CLASS = "strike";
+const TASK_CLASS = "task";
+
 class Task {
     constructor(t) {
         this.text = t;
@@ -21,19 +28,19 @@ class Task {
 
     _createDiv() {
         let div = document.createElement("div");
-        div.className = "task";
+        div.className = TASK_CLASS;
         div.draggable = true;
-        div.classList.add("draggable");
+        div.classList.add(DRAGGABLE_CLASS);
 
         const self = this;
         div.addEventListener("dragstart", function (e) {
             e.stopPropagation();
-            self.div.classList.add("dragging");
+            self.div.classList.add(DRAGGING_CLASS);
         });
 
         div.addEventListener("dragend", function (e) {
             e.preventDefault();
-            self.div.classList.remove("dragging");
+            self.div.classList.remove(DRAGGING_CLASS);
         });
         return div;
     }
@@ -88,26 +95,12 @@ class Task {
     _setDone() {
         this.completed = !this.completed;
         if (this.completed) {
-            this.taskDesc.className = "strike";
+            this.taskDesc.className = STRIKE_CLASS;
+            this.div.classList.add(COMPLETED_CLASS);
         } else {
             this.taskDesc.className = "";
+            this.div.classList.remove(COMPLETED_CLASS);
         }
-    }
-
-    bindDeleteBtn(func) {
-        this.deleteBtn.addEventListener("click", func);
-    }
-
-    setText(t) {
-        this.taskDesc.value = t;
-    }
-
-    delete() {
-        this.div.parentNode.removeChild(this.div);
-    }
-
-    getText() {
-        return this.taskDesc.value;
     }
 }
 
@@ -152,7 +145,7 @@ let taskContainer = document.getElementById("task-container");
 taskContainer.addEventListener("dragover", function (e) {
     e.preventDefault();
     const afterElement = getDragAfterElement(taskContainer, e.clientY);
-    const draggingTask = document.querySelector(".dragging");
+    const draggingTask = document.querySelector(DRAGGING_CLASS);
     if (afterElement == null) {
         taskContainer.appendChild(draggingTask);
     } else {
@@ -169,6 +162,5 @@ clearBtn.addEventListener("click", clearInput);
 
 // Clear task input on load
 document.addEventListener("DOMContentLoaded", function () {
-    let input = document.getElementById("task-input");
-    input.value = "";
+    clearInput();
 });
