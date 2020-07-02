@@ -1,6 +1,10 @@
 ﻿header {
+    background-color: hsla(269, 40%, 90%, 1);
     font-family: 'Rubik', sans-serif;
+    padding: 0.25em;
+    margin: 0.5em 0.5em 2em 0.5em;
     text-align: center;
+    width: 100%;
 }
 
 body {
@@ -9,11 +13,35 @@ body {
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    font-size: 105%;
+
+}
+
+input {
+    font-size: 105%;
+    height: 2em;
+    
+    border: 2px solid hsla(156, 14%, 85%, 1);
+    margin: 0.25em;
 }
 
 button {
     height: 2em;
     margin: 0.25em;
+    background-color: hsla(269, 50%, 85%, 1);
+    border: 3px solid white;
+    border-radius: 10%;
+    font-size: 0.9em;
+    min-width: 3em;
+}
+
+button:hover {
+    background-color: hsla(154, 0%, 95%, 1);
+    border: 3px solid white;
+}
+
+::-moz-focus-inner {
+    border: 0;
 }
 
 .task {
@@ -25,7 +53,7 @@ button {
     margin: 0.5em;
     background-color: hsla(156, 49%, 83%, 1);
     border-color: hsla(156, 10%, 90%, 1);
-    border: 2px solid hsla(156, 30%, 40%, 1);
+    border: 2px dashed hsla(156, 30%, 60%, 1);
 }
 
     .task > label {
@@ -35,22 +63,24 @@ button {
     .task > input {
         flex-grow: 3;
         height: 2em;
-        background-color: hsla(156, 14%, 90%, 1);
-        border: 5px ridge hsla(156, 14%, 80%, 1);
-        padding: 0.5em;
+        background-color: hsla(269, 50%, 95%, 1);
+        border-color: hsla(269, 14%, 80%, 1);
         margin: 0.25em;
     }
 
     .task > .done-checkbox {
         flex-grow: 0;
         margin: 0em 0em 0em 0.5em;
-        height: 1.5em;
         border: none;
     }
 
         .task > input:focus {
             background-color: white;
         }
+
+.category-btn {
+    border: 2px solid black;
+}
 
 .strike {
     text-decoration: line-through;
@@ -64,22 +94,29 @@ button {
     background-color: hsla(54, 93%, 95%, 1);
 }
 
+.completed {
+    background-color: hsla(105, 49%, 90%, 1);
+    border-color: hsla(105, 49%, 50%, 1);
+}
+
 #container {
     font-family: 'Muli', sans-serif;
 }
 
 #new-task, #all-tasks {
-    min-width: 500px;
+    min-width: 600px;
     background-color: hsla(156, 49%, 83%, 1);
     margin: 1em;
     padding: 0.5em;
-    border: 3px solid black;
+/*    border: 3px solid black;*/
+    border: 3px dashed hsla(156, 30%, 60%, 1);
 }
 
 #new-task {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     min-height: 2em;
 }
 
@@ -96,4 +133,32 @@ button {
 #author {
     font-weight: 400;
     letter-spacing: 0.5rem;
+}
+
+#task-btns {
+    margin: 3em;
+}
+
+#all-tasks-btn {
+    background-color: hsla(0, 49%, 83%, 1);
+    border-color: hsla(0, 49%, 63%, 1);
+    border-width: 3px;
+}
+
+#in-progress-tasks-btn {
+    background-color: hsla(58, 49%, 83%, 1);
+    border-color: hsla(58, 49%, 63%, 1);
+    border-width: 3px;
+}
+
+#completed-tasks-btn {
+    background-color: hsla(105, 49%, 83%, 1);
+    border-color: hsla(105, 49%, 63%, 1);
+    border-width: 3px;
+}
+
+#all-tasks-btn:hover,
+#in-progress-tasks-btn:hover,
+#completed-tasks-btn:hover {
+    background-color: hsla(105, 0%, 95%, 1);
 }

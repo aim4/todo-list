@@ -86,7 +86,7 @@ class Task {
 
     _createDoneLabel() {
         let label = document.createElement("label");
-        label.innerText = "done";
+        label.innerText = "Done";
         return label;
     }
 
